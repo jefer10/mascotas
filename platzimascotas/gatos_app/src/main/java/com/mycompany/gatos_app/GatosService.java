@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,7 +40,7 @@ public class GatosService {
         
         //crear un objeto de la clase Gson
         Gson gson= new  Gson();
-        Gatos gatos=gson.fromJson(responseJason,Gatos.class);//esta haciendo un parceo de json a tipo gato
+        Gatos gatos=gson.fromJson(responseJason,Gatos.class);//esta haciendo un parceo de json a tipo gato y instanceando el objeto
         
         //redimensionar la imagen (en caso de necesitar)
         Image image=null;
@@ -57,9 +58,40 @@ public class GatosService {
                 
             }
             
+            String menu="opciones:\n "+
+                    "1. ver otra imagen \n"+
+                    "2. favorito \n"+
+                    "3. volver \n";
+            String[] botones={"ver otra imagen", "favorito","volver"};
+            //String id_gato =String.valueOf(gatos.getUrl());
+            String id_gato =gatos.getId();
+            String opcion=(String) JOptionPane.showInputDialog(null,menu,id_gato,JOptionPane.INFORMATION_MESSAGE,fondoGato,botones,botones[0]);
+            
+            int seleccion=-1;
+            for (int i=0;i<botones.length;i++){
+                if(opcion.equals(botones[i])){
+                    seleccion=i;
+                }
+            }
+            
+            switch(seleccion){
+                case 0:
+                    verGatos();
+                    break;
+                case 1:
+                    favoritoGato(gatos);
+                    break;
+                default:
+                    break;
+            }
+            
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public static void favoritoGato(Gatos gatos) {
+        
     }
     
 }

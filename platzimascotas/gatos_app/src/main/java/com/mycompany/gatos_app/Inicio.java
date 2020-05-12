@@ -5,6 +5,7 @@
  */
 package com.mycompany.gatos_app;
 
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class Inicio {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         int opcion_menu=-1;
         String[] botones={
@@ -36,6 +37,7 @@ public class Inicio {
             
             switch(opcion_menu){
                 case 0:
+                    GatosService.verGatos();
                     break;
                 case 1:
                     break;
