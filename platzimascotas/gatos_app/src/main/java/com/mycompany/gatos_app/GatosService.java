@@ -125,6 +125,15 @@ public class GatosService {
            //creamos el objeto gson
            Gson gson =new Gson();
            GatosFavoritos[] gatosArray=gson.fromJson(responseJason, GatosFavoritos[].class);//un arreglo debido a que responde con varios objetos tipo json
+           
+            if (gatosArray.length>0) {
+                int min=1;
+                int max= gatosArray.length;
+                int aleatorio=(int)(Math.random()*((max - min)-1))  +min;
+                int indice=aleatorio-1;
+                
+                GatosFavoritos gatofav=gatosArray[indice];
+            }
             
         } catch (IOException e) {
             System.out.println(e);
