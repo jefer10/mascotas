@@ -129,16 +129,62 @@ public class GatosService {
             if (gatosArray.length>0) {
                 int min=1;
                 int max= gatosArray.length;
-                int aleatorio=(int)(Math.random()*((max - min)-1))  +min;
+                int aleatorio=(int)(Math.random()*((max - min)+1))  +min;
                 int indice=aleatorio-1;
                 
                 GatosFavoritos gatofav=gatosArray[indice];
-            }
-            
+                
+                //redimensionar la imagen (en caso de necesitar)
+                Image image=null;
+
+                URL url=new URL(gatofav.image.getUrl());
+                image=ImageIO.read(url);
+
+                ImageIcon fondoGato=new ImageIcon(image);//
+
+                if(fondoGato.getIconWidth()>800){
+                    //redimensiona la imagen
+                    Image fondo=fondoGato.getImage();
+                    Image modificada=fondo.getScaledInstance(800, 600, java.awt.Image.SCALE_SMOOTH);//se esta dimensionando la imagen
+                    fondoGato=new ImageIcon(modificada);
+
+                }
+
+                String menu="opciones:\n "+
+                        "1. ver otra imagen \n"+
+                        "2. eliminar favorito \n"+
+                        "3. volver \n";
+                String[] botones={"ver otra imagen", "eliminar favorito","volver"};
+                //String id_gato =String.valueOf(gatos.getUrl());
+                String id_gato =gatofav.getId();
+                String opcion=(String) JOptionPane.showInputDialog(null,menu,id_gato,JOptionPane.INFORMATION_MESSAGE,fondoGato,botones,botones[0]);
+
+                int seleccion=-1;
+                for (int i=0;i<botones.length;i++){
+                    if(opcion.equals(botones[i])){
+                        seleccion=i;
+                    }
+                }
+
+                switch(seleccion){
+                    case 0:
+                        verFavoritos(appkey);
+                        break;
+                    case 1:
+                        borrarFavorito(gatofav);
+                        break;
+                    default:
+                        break;
+                }
+            }            
         } catch (IOException e) {
             System.out.println(e);
         }
              
+    }
+
+    private static void borrarFavorito(GatosFavoritos gatofav) {
+        
     }
     
 }
